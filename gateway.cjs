@@ -15,7 +15,7 @@ function authorized(req) {
   const [expiry, signature] = cookie.slice(11).split('.');
   return /^\d+$/.test(expiry || '') && Number(expiry) > Date.now() && equal(signature || '', sign(expiry));
 }
-const env = { ...process.env, PORT: '3000', NODE_ENV: 'production', NODE_CONFIG: JSON.stringify({server:{port:3000},challenges:{restrictToTutorialsFirst:true,safetyMode:'enabled'},hackingInstructor:{isEnabled:true}}) };
+const env = { ...process.env, PORT: '3000', NODE_ENV: 'production', NODE_CONFIG: JSON.stringify({server:{port:3000},challenges:{restrictToTutorialsFirst:true,safetyMode:'disabled'},hackingInstructor:{isEnabled:true}}) };
 delete env.CTF_ACCESS_PASSWORD; delete env.CTF_SESSION_SECRET;
 const child = spawn(process.execPath, ['--require', '/gateway/loopback.cjs', '/juice-shop/build/app.js'], {cwd:'/juice-shop',env,stdio:'inherit'});
 child.on('exit', code => process.exit(code || 1));
